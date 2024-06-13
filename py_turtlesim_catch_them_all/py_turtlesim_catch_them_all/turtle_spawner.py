@@ -14,7 +14,7 @@ from my_custom_interfaces.msg import Turtle
 from my_custom_interfaces.msg import TurtleArray
 from my_custom_interfaces.srv import KillTurtle
 
-class TurtleSpawner(Node):
+class TurtleSpawnerNode(Node):
     
     def __init__(self):
         super().__init__("turtle_spawner")
@@ -29,7 +29,7 @@ class TurtleSpawner(Node):
         self.turtle_counter_ = 0
         
         self.alive_turtles_publisher_ = self.create_publisher(TurtleArray, "alive_turtles", 10)         
-        self.spawn_turtle_timer_ = self.create_timer(1.0/self.spawn_frequency, self.spawn_new_turtle) 
+        self.spawn_turtle_timer_ = self.create_timer(1.0/self.spawn_frequency_, self.spawn_new_turtle) 
         self.kill_turtle_service_ = self.create_service(KillTurtle, "kill_turtle", self.callbackKillTurtle) 
         
     def callbackKillTurtle(self, request, response): 
@@ -68,7 +68,7 @@ class TurtleSpawner(Node):
         self.alive_turtles_publisher_.publish(msg)
             
     def spawn_new_turtle(self):
-        self.turtle_counter += 1
+        self.turtle_counter_ += 1
         
         turtle_name = self.turtle_name_prefix_ + str(self.turtle_counter_)
         x = random.uniform(0.0, 11.0)
@@ -115,7 +115,7 @@ class TurtleSpawner(Node):
            
 def main(args=None):
     rclpy.init(args=args)
-    node = TurtleSpawner()
+    node = TurtleSpawnerNode()
     rclpy.spin(node)
     rclpy.shutdown()
 

@@ -25,8 +25,8 @@ class TurtleControllerNode(Node):
         self.pose_ = None
         
         self.new_pos_publisher_ = self.create_publisher(Twist, "turtle1/cmd_vel", 10)
-        self.turtle_pos_subscriber_ = self.create_subscription(Pose, "turtle1/pose", self.callbackNewPos)
-        self.alive_turtles_subscriber_ = self.create_subscription(TurtleArray, "alive_turtles", self.callbackALiveTurtles)
+        self.turtle_pos_subscriber_ = self.create_subscription(Pose, "turtle1/pose", self.callbackNewPos, 10)
+        self.alive_turtles_subscriber_ = self.create_subscription(TurtleArray, "alive_turtles", self.callbackALiveTurtles, 10)
         self.control_loop_timer_ = self.create_timer(0.01,self.callbackControlPos)
     
     
@@ -75,7 +75,7 @@ class TurtleControllerNode(Node):
         else:
             msg.linear.x = 0.0
             msg.angular.z =0.0
-            self.callback_call_KillTurtle(self.turtle_to_catch_.name)
+            self.callKillTurtle_server(self.turtle_to_catch_.name)
             self.turtle_to_catch_ = None
                     
         self.new_pos_publisher_.publish(msg)
