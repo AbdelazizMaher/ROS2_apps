@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            "turtlesim_controller = turtlesim_catch_them_all.turtle_controller:main",
+            "turtle_spawner = turtlesim_catch_them_all.turtle_spawner:main"            
         ],
     },
 )
