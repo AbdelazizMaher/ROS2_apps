@@ -12,7 +12,7 @@ from turtlesim.srv import Kill
 
 from my_custom_interfaces.msg import Turtle
 from my_custom_interfaces.msg import TurtleArray
-from my_custom_interfaces.srv import CatchTurtle
+from my_custom_interfaces.srv import KillTurtle
 
 class TurtleSpawner(Node):
     
@@ -30,7 +30,37 @@ class TurtleSpawner(Node):
         
         self.alive_turtles_publisher_ = self.create_publisher(TurtleArray, "alive_turtles", 10)         
         self.spawn_turtle_timer_ = self.create_timer(1.0/self.spawn_frequency, self.spawn_new_turtle) 
-
+        self.kill_turtle_service_ = self.create_service(KillTurtle, "kill_turtle", self.callbackKillTurtle) 
+        
+    def callbackKillTurtle(self, request, response): 
+        self.callKill_server(request.name)
+        response.success = True
+        return response
+    
+    def callKill_server(self, turtle_name):
+        client = self.create_client(Kill, "kill")
+        while not client.wait_for_service(1.0):
+            self.get_logger().info("Waiting for Server...") 
+        
+        request = Kill.Request()        
+        request.name =  turtle_name
+        
+        future = client.call_async(request)        
+        future.add_done_callback(
+            partial(self.callback_call_kill, turtle_name=turtle_name))  
+        
+    def callback_call_kill(self, future, turtle_name):
+        try:
+            future.result()
+            for(i, turtle) in enumerate(self.alive_turtles_):
+                if turtle.name == turtle_name:
+                    del self.alive_turtles_[i]
+                    self.publish_alive_turtles()
+                    break
+        except Exception as e:
+            self.get_logger().error("Service call failed %r" % (e,))        
+    
+            
     def publish_alive_turtles(self):
         msg = TurtleArray()
         msg.turtles = self.alive_turtles_
@@ -78,6 +108,7 @@ class TurtleSpawner(Node):
                 self.publish_alive_turtles()                
         except Exception as e:
             self.get_logger().error("Service call failed %r" % (e,))
+            
                 
          
 

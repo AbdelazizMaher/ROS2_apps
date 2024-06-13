@@ -4,13 +4,14 @@ import rclpy
 from rclpy.node import Node
 
 import math
+from functools import partial
 
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 
 from my_custom_interfaces.msg import Turtle
 from my_custom_interfaces.msg import TurtleArray
-from my_custom_interfaces.srv import CatchTurtle
+from my_custom_interfaces.srv import KillTurtle
 
 class TurtleControllerNode(Node):
     
@@ -58,9 +59,30 @@ class TurtleControllerNode(Node):
         else:
             msg.linear.x = 0.0
             msg.angular.z =0.0
-            
-        
+            self.callback_call_KillTurtle(self.turtle_to_catch_.name)
+            self.turtle_to_catch_ = None
+                    
         self.new_pos_publisher_.publish(msg)
+        
+    def callKillTurtle_server(self, turtle_name):
+        client = self.create_client(KillTurtle, "kill_turtle")
+        while not client.wait_for_service(1.0):
+            self.get_logger().info("Waiting for Server...") 
+        
+        request = KillTurtle.Request()        
+        request.name =  turtle_name
+        
+        future = client.call_async(request)        
+        future.add_done_callback(
+            partial(self.callback_call_KillTurtle, turtle_name=turtle_name))  
+        
+    def callback_call_KillTurtle(self, future, turtle_name):
+        try:
+            response = future.result()
+            if not response.success:
+                self.get_logger().error("Turtle " + str(turtle_name) + " could not be killed")
+        except Exception as e:
+            self.get_logger().error("Service call failed %r" % (e,))         
            
 def main(args=None):
     rclpy.init(args=args)
