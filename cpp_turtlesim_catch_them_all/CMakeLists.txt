@@ -17,4 +17,16 @@ find_package(geometry_msgs REQUIRED)
 find_package(my_custom_interfaces REQUIRED)
 find_package(turtlesim REQUIRED)
 
+add_executable(turtle_controller src/turtle_controller.cpp)
+ament_target_dependencies(turtle_controller rclcpp turtlesim my_custom_interfaces geometry_msgs)
+
+add_executable(turtle_spawner src/turtle_spawner.cpp)
+ament_target_dependencies(turtle_spawner rclcpp turtlesim my_custom_interfaces)
+
+install(TARGETS
+  turtle_controller
+  turtle_spawner
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()

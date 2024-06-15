@@ -53,10 +53,10 @@ private:
                 }
                 turtle_to_catch_ = closest_turtle;
             }
-        }
-        else
-        {
-            turtle_to_catch_ = msg->turtles.at(0);
+            else
+            {
+                turtle_to_catch_ = msg->turtles.at(0);
+            }
         }
     }
 
@@ -140,7 +140,7 @@ private:
 
             if (!response->success)
             {
-                RCLCPP_ERROR(this->get_logger(), "turtle" + turtle_name + " could not be killed");
+                RCLCPP_ERROR(this->get_logger(), "turtle %s could not be killed", turtle_name.c_str());
             }
         }
         catch (const std::exception &e)
