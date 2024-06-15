@@ -40,7 +40,7 @@ class TurtleControllerNode(Node):
                     dist_y = turtle.y - self.pose_.y
                     distance = math.sqrt(dist_x * dist_x + dist_y * dist_y)
                     
-                    if closest_turtle == None or closest_turtle_distance == None:
+                    if closest_turtle == None or distance < closest_turtle_distance:
                         closest_turtle = turtle
                         closest_turtle_distance = distance 
                 self.turtle_to_catch_ = closest_turtle                   

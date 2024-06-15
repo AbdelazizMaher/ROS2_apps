@@ -11,6 +11,7 @@
   <depend>rclcpp</depend>
   <depend>geometry_msgs</depend>
   <depend>turtlesim</depend>
+  <depend>my_custom_interfaces</depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
