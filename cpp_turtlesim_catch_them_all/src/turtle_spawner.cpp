@@ -108,14 +108,14 @@ private:
         /* Set the turtles field to the list of alive turtles */
         msg.turtles = alive_turtles_;
 
-         /* Publish the message */
+        /* Publish the message */
         alive_turtles_publisher_->publish(msg);
     }
 
-     /* Function to spawn a new turtle */
+    /* Function to spawn a new turtle */
     void spawnNewTurtle()
     {
-         /* Increment the turtle counter */
+        /* Increment the turtle counter */
         turtle_counter_ += 1;
 
         /* Generate a new turtle name */
@@ -125,7 +125,7 @@ private:
         double y = randomDouble() * 11.0;
         double theta = randomDouble() * 2 * M_PI;
 
-         /* Create a new thread to call the spawn service */
+        /* Create a new thread to call the spawn service */
         spawn_turtle_threads_.push_back(
             std::thread(std::bind(&TurtleSpawnerNode::callTurtleSpawner_server, this, x, y, theta, turtle_name)));
     }
