@@ -1,4 +1,47 @@
 # ROS 2 Applications Workspace
+
+This repository contains various ROS2 applications, implemented in both C++ and Python, for simulating and controlling robotic behaviors using the Turtlesim package. Below is a detailed description of each folder and its contents.
+
+## Repository Structure
+
+### cpp_pkg_ws
+- **Description**: This workspace contains the C++ implementation of the ROS2 applications.
+- **Contents**: Initial setup and configuration for the C++ workspace.
+
+### cpp_turtlesim_catch_them_all
+- **Description**: Contains the C++ implementation of the "Catch Them All" project using the Turtlesim package.
+- **Contents**:
+  - `src/`: Source files for the `turtle_controller` and `turtle_spawner` nodes.
+  - `CMakeLists.txt`: Build configuration for the package.
+  - `package.xml`: Package manifest.
+
+### my_custom_bringup
+- **Description**: This package includes launch files for starting various nodes and configurations.
+- **Contents**:
+  - `launch/`: Custom launch files for the ROS2 applications.
+
+### my_custom_interfaces
+- **Description**: Contains custom message and service definitions used in the projects.
+- **Contents**:
+  - `msg/`: Custom message definitions (`Turtle.msg`, `TurtleArray.msg`).
+  - `srv/`: Custom service definitions (`CatchTurtle.srv`).
+  - `CMakeLists.txt`: Build configuration for the package.
+  - `package.xml`: Package manifest.
+
+### py_pkg_ws
+- **Description**: This workspace contains the Python implementation of the ROS2 applications.
+- **Contents**: Initial setup and configuration for the Python workspace.
+
+### py_turtlesim_catch_them_all
+- **Description**: Contains the Python implementation of the "Catch Them All" project using the Turtlesim package.
+- **Contents**:
+  - `src/`: Source files for the `turtle_controller` and `turtle_spawner` nodes.
+  - `CMakeLists.txt`: Build configuration for the package.
+  - `package.xml`: Package manifest.
+
+
+## Project Descriptions
+
 # Turtlesim "Catch Them All" Project
 
 This project uses the Turtlesim package to simulate a scenario where a master turtle (turtle1) catches other turtles that are spawned randomly on the screen. The project involves three main nodes:
