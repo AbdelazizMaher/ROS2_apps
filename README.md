@@ -124,4 +124,4 @@ A launch file in the `my_robot_bringup` package is used to launch the three node
 
 ## Project Demo Video
 
-![Brick Breaker Demo](https://youtu.be/m8cpwuZiixc)
+[[Turtlesim "Catch Them All" Demo]](https://youtu.be/m8cpwuZiixc)
