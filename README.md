@@ -125,6 +125,3 @@ A launch file in the `my_robot_bringup` package is used to launch the three node
 - Add necessary parameters to the nodes.
 - Create a launch file to start all nodes with their parameters.
 
-## Project Demo Video
-
-[[Turtlesim "Catch Them All" Demo]](https://youtu.be/m8cpwuZiixc)
